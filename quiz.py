@@ -41,30 +41,57 @@ QUESTIONS = {
         "The random numbers are more random.",
         "The computer clock is reset.",
         "The first random number is always 42.",
+    ],
+    "When does __name__ == '__main__' equal True in a Python file": [
+        "When the file is run as a script",
+        "When the file is imported as a module",
+        "When the file has a valid name",
+        "When the file only has one function",
     ]
 }
 
-num_questions = min(NUM_QUESTIONS_ON_QUIZ, len(QUESTIONS))
-questions = random.sample(list(QUESTIONS.items()), k=num_questions)
 
-num_correct = 0
-for num, (question, options) in enumerate(questions, start=1):
-    print(f"\nQuestion {num}:")
+def prepare_questions(questions, num_questions):
+    num_questions = min(NUM_QUESTIONS_ON_QUIZ, len(QUESTIONS))
+    return random.sample(list(QUESTIONS.items()), k=num_questions)
+
+
+def get_answer(question, options):
     print(f"{question}? ")
-    correct_answer = options[0]
-    labeled_options = dict(
-        zip(ascii_lowercase, random.sample(options, k=len(options)))
-    )
+    labeled_options = dict(zip(ascii_lowercase, options))
     for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
     while (answer_label := input("\nChoice? ")) not in labeled_options:
         print(f"Please enter one of {', '.join(labeled_options)}")
-    answer = labeled_options[answer_label]
+    return labeled_options[answer_label]
+
+
+def ask_question(question, options):
+    correct_answer = options[0]
+    ordered_options = random.sample(options, k=len(options))
+
+    answer = get_answer(question, ordered_options)
     if answer == correct_answer:
-        num_correct += 1
         print("⭐ Correct! ⭐")
+        return 1
     else:
         print(f"The answer is {correct_answer!r}, not {answer!r}")
+        return 0
 
-print(f"\nYou got {num_correct} correct out of {num} questions")
+
+def run_quiz():
+    questions = prepare_questions(
+        QUESTIONS, num_questions=NUM_QUESTIONS_ON_QUIZ
+    )
+
+    num_correct = 0
+    for num, (question, options) in enumerate(questions, start=1):
+        print(f"\nQuestion {num}:")
+        num_correct += ask_question(question, options)
+
+    print(f"\nYou got {num_correct} correct out of {num} questions")
+
+
+if __name__ == "__main__":
+    run_quiz()
