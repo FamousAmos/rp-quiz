@@ -1,4 +1,4 @@
-
+from string import ascii_lowercase
 
 QUESTIONS = {
     "When was the first known use of the word 'quiz'": [
@@ -19,17 +19,32 @@ QUESTIONS = {
     "What's the name of Python's sorting algorithm?": [
         "Timsort", "Quicksort", "Merge sort", "Bubble sort"
     ],
+    "What does dict.get(key) return if the key isn't found in the dictionary?": [
+        "None", "key", "True", "False"
+    ],
+    "How do you iterate over both indices and elements in an iterable": [
+        "enumerate(iterable)",
+        "enumerate(iterable, start=1)",
+        "range(iterable)",
+        "range(iterable, start=1)",
+    ],
 }
 
-for question, options in QUESTIONS.items():
+num_correct = 0
+for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
+    print(f"\nQuestion {num}:")
+    print(f"{question}? ")
     correct_answer = options[0]
-    sorted_options = sorted(options)
-    for label, option in enumerate(sorted_options):
+    labeled_options = dict(zip(ascii_lowercase, sorted(options)))
+    for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
-    answer_label = int(input(f"{question}? "))
-    answer = sorted_options[answer_label]
+    answer_label = input("\nChoice? ")
+    answer = labeled_options.get(answer_label)
     if answer == correct_answer:
-        print("Correct!")
+        num_correct += 1
+        print("⭐ Correct! ⭐")
     else:
         print(f"The answer is {correct_answer!r}, not {answer!r}")
+
+print(f"\nYou got {num_correct} correct out of {num} questions")
