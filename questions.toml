@@ -1,29 +1,32 @@
-[[questions]]
+[python]
+label = "Python"
+
+[[python.questions]]
 question = "Which version of Python is the first with TOML support built-in"
 answers = ["3.11"]
 options = ["3.9", "3.10", "3.12"]
 
-[[questions]]
+[[python.questions]]
 question = "What's the name of the list-like data structure in TOML"
 answers = ["Array"]
 options = ["List", "Sequence", "Set"]
 
-[[questions]]
+[[python.questions]]
 question ="When was the first known use of the word 'quiz'"
 answers = ["1781"]
 options = ["1771", "1871", "1881"]
 
-[[questions]]
+[[python.questions]]
 question = "Which built-in function can get information from the user"
 answers = ["input"]
 options = ["get", "print", "write"]
 
-[[questions]]
+[[python.questions]]
 question = "Which keyword do you use to loop over a given list of elements"
 answers = ["for"]
 options = ["while", "each", "loop"]
 
-[[questions]]
+[[python.questions]]
 question = "What's the purpose of the built-in zip() function"
 answers = ["To iterate over two or more sequences at the same time"]
 options = [
@@ -32,31 +35,31 @@ options = [
     "To get information from the user",
 ]
 
-[[questions]]
+[[python.questions]]
 question = "What's the name of Python's sorting algorithm?"
 answers = ["Timsort"]
 options = ["Quicksort", "Merge sort", "Bubble sort"]
 
-[[questions]]
+[[python.questions]]
 question= "What does dict.get(key) return if the key isn't found in the dictionary?"
 answers = ["None"]
 options = ["key", "True", "False"]
 
-[[questions]]
+[[python.questions]]
 question = "How do you iterate over both indices and elements in an iterable"
-answers = "[enumerate(iterable)"]
+answers = ["enumerate(iterable)"]
 options = [
     "enumerate(iterable, start=1)", 
     "range(iterable)", 
     "range(iterable, start=1)"
 ]
 
-[[questions]]
+[[python.questions]]
 question = "What's the official name of the := operator"
 answers =  ["Assignment expression"]
 options = ["Named expression", "Walrus operator", "Colon equals operator"]
 
-[[questions]]
+[[python.questions]]
 question = "What's one effect of calling random.seed(42)"
 answers = ["The random numbers are reproducible."]
 options = [
@@ -65,7 +68,7 @@ options = [
     "The first random number is always 42."
 ]
 
-[[questions]]
+[[python.questions]]
 question = "When does __name__ == '__main__' equal True in a Python file"
 answers = ["When the file is run as a script"]
 options =  [
@@ -74,13 +77,13 @@ options =  [
     "When the file only has one function"
 ]
 
-[[questions]]
+[[python.questions]]
 question = "How can you run a Python script named quiz.py"
 answers = ["python quiz.py", "python -m quiz.py"]
 options = ["python quiz", "python -m quiz.py"]
 hint = "One option uses the filename, and the other uses the module name."
 
-[[questions]]
+[[python.questions]]
 question = "What's a PEP"
 answers = ["A Python Enhancement Proposal"]
 alternatives = [
@@ -96,7 +99,7 @@ explanation = """
     document design decisions made about the language.
 """
 
-[[questions]]
+[[python.questions]]
 question = "How can you add a docstring to a function"
 answers = [
     "By writing a string literal as the first statement in the function",
@@ -112,4 +115,30 @@ explanation = """
 
     There is no built-in @docstring decorator. Many functions naturally return
     strings. Such a feature can therefore not be used for docstrings.
+"""
+
+[capitals]
+label = "Capitals"
+
+[[capitals.questions]]
+question = "What's the capital of Norway"
+answers = ["Oslo"]
+hint = "Lars Onsager, Jens Stoltenberg, Trygve Lie, and Børge Ousland."
+options = ["Stockholm", "Copenhagen", "Helsinki", "Reykjavik"]
+explanation = """
+    Oslo was founded as a city in the 11th century and established as a
+    trading place. It became the capital of Norway in 1299. The city was
+    destroyed by a fire in 1624 and rebuilt as Christiania, named in honor
+    of the reigning king. The city was renamed back to Oslo in 1925.
+"""
+
+[[capitals.questions]]
+question = "What's the state capital of Texas, USA"
+answers = ["Austin"]
+options = ["Harrisburg", "Houston", "Galveston", "Columbia"]
+hint = "SciPy is held there each year."
+explanation = """
+    Austin is named in honor of Stephen F. Austin. It was purpose-built to
+    be the capital of Texas and was incorporated in December 1839. Houston,
+    Harrisburg, Columbia, and Galveston are all earlier capitals of Texas.
 """
