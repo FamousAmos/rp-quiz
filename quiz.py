@@ -17,28 +17,51 @@ def prepare_questions(path, num_questions):
     return random.sample(list(questions), k=num_questions)
 
 
-def get_answer(question, options):
+def get_answers(question, options, num_choices=1):
     print(f"{question}? ")
     labeled_options = dict(zip(ascii_lowercase, options))
     for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
-    while (answer_label := input("\nChoice? ")) not in labeled_options:
-        print(f"Please enter one of {', '.join(labeled_options)}")
-    return labeled_options[answer_label]
+    while True:
+        plural_s = "" if num_choices == 1 else f"s (choose {num_choices})"
+        answer = input(f"\nChoice{plural_s}? ")
+        answers = set(answer.replace(",", " ").split())
+
+        if len(answers) != num_choices:
+            plural_s = "" if num_choices == 1 else "s, separated by a comma"
+            print(f"Please answer {num_choices} option{plural_s}")
+            continue
+
+        if any(
+            (invalid := answer) not in labeled_options
+            for answer in answers
+        ):
+            print(
+                f"{invalid!r} is not a valid choice. "
+                f"Please use {', '.join(labeled_options)}"
+            )
+            continue
+
+        return [labeled_options[answer] for answer in answers]
 
 
 def ask_question(question):
-    correct_answer = question["answer"]
-    options = [question["answer"]] + question["options"]
+    correct_answers = question["answers"]
+    options = question["answers"] + question["options"]
     ordered_options = random.sample(options, k=len(options))
 
-    answer = get_answer(question["question"], ordered_options)
-    if answer == correct_answer:
+    answers = get_answers(
+        question=question["question"],
+        options=ordered_options,
+        num_choices=len(correct_answers)
+    )
+    if set(answers) == set(correct_answers):
         print("⭐ Correct! ⭐")
         return 1
     else:
-        print(f"The answer is {correct_answer!r}, not {answer!r}")
+        is_or_are = "is" if len(correct_answers) == 1 else "s are"
+        print("\n- ".join([f"No, the answer{is_or_are}:"] + correct_answers))
         return 0
 
 
