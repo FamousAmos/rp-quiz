@@ -17,9 +17,12 @@ def prepare_questions(path, num_questions):
     return random.sample(list(questions), k=num_questions)
 
 
-def get_answers(question, options, num_choices=1):
+def get_answers(question, options, num_choices=1, hint=None):
     print(f"{question}? ")
     labeled_options = dict(zip(ascii_lowercase, options))
+    if hint:
+        labeled_options["?"] = "Hint"
+
     for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
@@ -27,6 +30,10 @@ def get_answers(question, options, num_choices=1):
         plural_s = "" if num_choices == 1 else f"s (choose {num_choices})"
         answer = input(f"\nChoice{plural_s}? ")
         answers = set(answer.replace(",", " ").split())
+
+        if hint and "?" in answers:
+            print(f"\nHINT: {hint}")
+            continue
 
         if len(answers) != num_choices:
             plural_s = "" if num_choices == 1 else "s, separated by a comma"
@@ -54,15 +61,19 @@ def ask_question(question):
     answers = get_answers(
         question=question["question"],
         options=ordered_options,
-        num_choices=len(correct_answers)
+        num_choices=len(correct_answers),
+        hint=question.get("hint"),
     )
-    if set(answers) == set(correct_answers):
+    if correct := (set(answers) == set(correct_answers)):
         print("⭐ Correct! ⭐")
-        return 1
     else:
         is_or_are = "is" if len(correct_answers) == 1 else "s are"
         print("\n- ".join([f"No, the answer{is_or_are}:"] + correct_answers))
-        return 0
+
+    if "explanation" in question:
+        print(f"\nEXPLANATION:\n{question['explanation']}")
+
+    return 1 if correct else 0
 
 
 def run_quiz():
