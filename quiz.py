@@ -1,3 +1,4 @@
+from ast import While
 from string import ascii_lowercase
 
 QUESTIONS = {
@@ -39,8 +40,9 @@ for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
     for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
-    answer_label = input("\nChoice? ")
-    answer = labeled_options.get(answer_label)
+    while (answer_label := input("\nChoice? ")) not in labeled_options:
+        print(f"Please enter one of {', '.join(labeled_options)}")
+    answer = labeled_options[answer_label]
     if answer == correct_answer:
         num_correct += 1
         print("⭐ Correct! ⭐")
