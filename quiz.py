@@ -1,6 +1,7 @@
-from ast import While
+import random
 from string import ascii_lowercase
 
+NUM_QUESTIONS_ON_QUIZ = 5
 QUESTIONS = {
     "When was the first known use of the word 'quiz'": [
         "1781", "1771", "1871", "1881"
@@ -29,14 +30,31 @@ QUESTIONS = {
         "range(iterable)",
         "range(iterable, start=1)",
     ],
+    "What's the official name of the := operator": [
+        "Assignment expression",
+        "Named expression",
+        "Walrus operator",
+        "Colon equals operator",
+    ],
+    "What's one effect of calling random.seed(42)": [
+        "The random numbers are reproducible.",
+        "The random numbers are more random.",
+        "The computer clock is reset.",
+        "The first random number is always 42.",
+    ]
 }
 
+num_questions = min(NUM_QUESTIONS_ON_QUIZ, len(QUESTIONS))
+questions = random.sample(list(QUESTIONS.items()), k=num_questions)
+
 num_correct = 0
-for num, (question, options) in enumerate(QUESTIONS.items(), start=1):
+for num, (question, options) in enumerate(questions, start=1):
     print(f"\nQuestion {num}:")
     print(f"{question}? ")
     correct_answer = options[0]
-    labeled_options = dict(zip(ascii_lowercase, sorted(options)))
+    labeled_options = dict(
+        zip(ascii_lowercase, random.sample(options, k=len(options)))
+    )
     for label, option in labeled_options.items():
         print(f"  {label}) {option}")
 
